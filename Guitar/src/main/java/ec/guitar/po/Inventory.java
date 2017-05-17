@@ -13,7 +13,7 @@ import ec.guitar.dbutil.Dbutil;
 import ec.guitar.po.Guitar;
 
 public class Inventory extends ActionSupport{
-  private List guitars;
+  public static List guitars;
 
   public Inventory() {
     guitars = new LinkedList();
@@ -39,38 +39,9 @@ public class Inventory extends ActionSupport{
     return null;
   }
   
-  /*public List search(Guitar searchGuitar) {
-	  List Guitarslist = new LinkedList();   		
-	  for (Iterator i = guitars.iterator(); i.hasNext(); ) {
-	      Guitar guitar = (Guitar)i.next();
-	      // Ignore serial number since that's unique
-	      // Ignore price since that's unique
-	      String builder = searchGuitar.getBuilder();
-	      if ((builder != null) && (!builder.equals("")) &&
-	          (!builder.equals(guitar.getBuilder())))
-	        continue;
-	      String model = searchGuitar.getModel();
-	      if ((model != null) && (!model.equals("")) &&
-	          (!model.equals(guitar.getModel())))
-	        continue;
-	      String type = searchGuitar.getType();
-	      if ((type != null) && (!searchGuitar.equals("")) &&
-	          (!type.equals(guitar.getType())))
-	        continue;
-	      String backWood = searchGuitar.getBackWood();
-	      if ((backWood != null) && (!backWood.equals("")) &&
-	          (!backWood.equals(guitar.getBackWood())))
-	        continue;
-	      String topWood = searchGuitar.getTopWood();
-	      if ((topWood != null) && (!topWood.equals("")) &&
-	          (!topWood.equals(guitar.getTopWood())))
-	        continue;
-	      Guitarslist.add(guitar);
-	    }
-	    return Guitarslist;
-	  }*/
   
-  public Guitar search(Guitar searchGuitar) {
+  public List<Guitar> search(Guitar searchGuitar) {
+	  List<Guitar> list =new LinkedList();
 	    for (Iterator i = guitars.iterator(); i.hasNext(); ) {
 	      Guitar guitar = (Guitar)i.next();
 	      // Ignore serial number since that's unique
@@ -95,8 +66,8 @@ public class Inventory extends ActionSupport{
 	      if ((topWood != null) && (!topWood.equals("")) &&
 	          (!topWood.equals(guitar.getTopWood())))
 	        continue;
-	      return guitar;
+	      list.add(guitar);
 	    }
-	    return null;
+	    return list;
 	  }
 }

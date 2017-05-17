@@ -59,13 +59,13 @@ public class SearchGuitarAction extends Inventory{
 		this.topWood = topWood;
 	}
 
-
+	Guitar ErinLikes = new Guitar("",0,getBuilder(),getModel(),getType(),getBackWood(),getTopWood());
 
 	
 	public String execute() throws  Exception{
 		//GuitarDaoImpl guitarDaoImpl=new GuitarDaoImpl();
 		//guitarService.setGuitarDao(guitarDaoImpl);
-		if(guitarService.search(getBuilder())!=null){
+		if(guitarService.search(ErinLikes)!=null){
 			return SUCCESS;
 		}else{
 			return ERROR;

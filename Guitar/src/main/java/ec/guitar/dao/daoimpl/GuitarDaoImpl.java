@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -16,11 +17,7 @@ import ec.guitar.po.Guitar;
 import ec.guitar.po.Inventory;
 
 public abstract class GuitarDaoImpl implements GuitarDao {
-	@Override
-	public boolean add() {
-		// TODO Auto-generated method stub
-		return Dbutil.executeUpdate("insert into inv_inf values(?,?,?,?,?,?,?)",new Object[]{});		
-	}
+	
 
 	 private List guitars;
 
@@ -30,10 +27,9 @@ public abstract class GuitarDaoImpl implements GuitarDao {
 	  
 	public Guitar getAll() {
 		Guitar guitar = new Guitar(null, 0, null, null, null, null, null);
-		Dbutil db=new Dbutil();
 		String sql="select * from inv_inf";
 		try{
-			Connection conn = db.getConnection();; 
+			Connection conn = DriverManager.getConnection("jdbc:sqlite://g:/r/Navicat for SQLite/sql.db");
 			Statement stmt = conn.createStatement();
 			ResultSet rs=stmt.executeQuery(sql);
 		
@@ -49,30 +45,41 @@ public abstract class GuitarDaoImpl implements GuitarDao {
 		return guitar;
 	}
 
-	public List<Guitar> search(String builder) throws Exception {
+	public List<Guitar> search(){
 		// TODO Auto-generated method stub
-		String sql="select * from inv_inf where builder=?";
-		Dbutil db=new Dbutil();
+		String sql="select * from inv_inf";
 		List<Guitar> list =new LinkedList();
+		
 		try {
-			Connection conn = db.getConnection();; 
+			try {
+				Class.forName("org.sqlite.JDBC");
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+			Connection conn = DriverManager.getConnection("jdbc:sqlite://g:/r/Navicat for SQLite/sql.db"); 
 			Statement stmt = conn.createStatement();
 			ResultSet rs=stmt.executeQuery(sql);
 			
 			//rs.setString(1, serialNumber);
 			while(rs.next()){
 				Guitar guitar=new Guitar(rs.getString("serialNumber"), rs.getDouble("price"), rs.getString("builder"),
-									rs.getString("model"),rs.getString("type"), rs.getString("bacwood"), 
-									rs.getString("topwood"));
-					list.add(guitar);	
-			}
-			return list;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return null;
-	}
+									rs.getString("model"),rs.getString("type"), rs.getString("backWood"), 
+									rs.getString("topWood"));
+					list.add(guitar);
+					
+					
+					    
+					      return list;
+					    }
+					    return list;
+									  
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						return list;
+					}
 	
 
 }

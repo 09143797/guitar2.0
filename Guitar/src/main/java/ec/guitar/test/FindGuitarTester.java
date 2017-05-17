@@ -1,7 +1,8 @@
 package ec.guitar.test;
 
-import ec.guitar.dao.GuitarDao;
-import ec.guitar.dao.daoimpl.GuitarDaoImpl;
+import java.util.Iterator;
+import java.util.List;
+
 import ec.guitar.po.Guitar;
 import ec.guitar.po.Inventory;
 import ec.guitar.service.GuitarService;
@@ -10,28 +11,31 @@ public class FindGuitarTester {
 
   
 
-public static void main(String[] args) {
+public static void main(String[] args) throws Exception {
     // Set up Rick's guitar inventory
     Inventory inventory = new Inventory();
     GuitarService guitarService=new GuitarService();
-    initializeInventory(inventory);
     
     Guitar whatErinLikes = new Guitar("11277", 3999.95, "Collings", "CJ", "acoustic",
             "Indian Rosewood", "Sitka");
-    Guitar guitar = inventory.search(whatErinLikes);
-    if (guitar != null) {
+    List<Guitar> list = guitarService.search(whatErinLikes);
+   
+    if (list != null) {
+    	for (Iterator i = list.iterator(); i.hasNext(); ) {
+  	      Guitar guitar = (Guitar)i.next();
       System.out.println("Erin, you might like this " +
         guitar.getBuilder() + " " + guitar.getModel() +  " " +
         guitar.getType() + " guitar:\n   " +
         guitar.getBackWood() + " back and sides,\n   " +
         guitar.getTopWood() + " top.\nYou can have it for only $" +
         guitar.getPrice() + "!");
+    	}
     } else {
       System.out.println("Sorry, Erin, we have nothing for you.");
     }
   }
 
-  private static void initializeInventory(Inventory inventory) {
+  /*private static void initializeInventory(Inventory inventory) {
     inventory.addGuitar("11277", 3999.95, "Collings", "CJ", "acoustic",
                         "Indian Rosewood", "Sitka");
     inventory.addGuitar("V95693", 1499.95, "Fender", "Stratocastor", "electric",
@@ -54,5 +58,5 @@ public static void main(String[] args) {
                         "Cocobolo", "Cedar");
     inventory.addGuitar("6 29584", 2100.95, "PRS", "Dave Navarro Signature",
                         "electric", "Mahogany", "Maple");
-  }
+  }*/
 }
